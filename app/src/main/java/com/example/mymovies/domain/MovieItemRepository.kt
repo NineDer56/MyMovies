@@ -1,11 +1,7 @@
 package com.example.mymovies.domain
 
-import androidx.lifecycle.LiveData
-
 interface MovieItemRepository {
 
-    fun getMovieItem(movieId: Int) : MovieItem
-
-    fun getMovieItemList() : LiveData<List<MovieItem>>
+    suspend fun getMovieItemList(page : Int) : List<MovieItem>
 
 }

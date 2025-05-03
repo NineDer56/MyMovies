@@ -7,8 +7,8 @@
     android:layout_height="match_parent"
     app:defaultNavHost="true"
     app:navGraph="@navigation/nav_graph"
-    android:name="com.example.mymovies.presentation.MoviesFragment"
-    tools:context=".presentation.MainActivity">
+    android:name="com.example.mymovies.presentation.fragment.MoviesFragment"
+    tools:context=".presentation.activity.MainActivity">
 
 
 </androidx.fragment.app.FragmentContainerView>

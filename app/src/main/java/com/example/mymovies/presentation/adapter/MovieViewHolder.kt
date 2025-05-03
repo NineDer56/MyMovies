@@ -1,4 +1,4 @@
-package com.example.mymovies.presentation
+package com.example.mymovies.presentation.adapter
 
 import android.view.View
 import android.widget.ImageView

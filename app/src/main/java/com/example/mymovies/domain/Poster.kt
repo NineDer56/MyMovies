@@ -1,5 +1,7 @@
 package com.example.mymovies.domain
 
+import com.google.gson.annotations.SerializedName
+
 data class Poster(
-    val url : String
+    @SerializedName("url") val url : String
 )

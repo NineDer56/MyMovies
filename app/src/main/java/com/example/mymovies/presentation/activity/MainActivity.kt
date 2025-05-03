@@ -1,4 +1,4 @@
-package com.example.mymovies.presentation
+package com.example.mymovies.presentation.activity
 
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge

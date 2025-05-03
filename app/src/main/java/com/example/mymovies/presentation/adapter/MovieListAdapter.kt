@@ -1,4 +1,4 @@
-package com.example.mymovies.presentation
+package com.example.mymovies.presentation.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,6 +6,8 @@ import androidx.recyclerview.widget.ListAdapter
 import com.bumptech.glide.Glide
 import com.example.mymovies.R
 import com.example.mymovies.domain.MovieItem
+import java.math.RoundingMode
+import java.util.Locale
 
 class MovieListAdapter : ListAdapter<MovieItem, MovieViewHolder>(MovieItemDiffCallback()) {
 
@@ -23,8 +25,10 @@ class MovieListAdapter : ListAdapter<MovieItem, MovieViewHolder>(MovieItemDiffCa
 
         holder.apply {
             Glide.with(holder.itemView.context).load(movie.poster.url).into(ivPoster)
-            tvImdbRating.text = movie.rating.imdbRating.toString()
-            tvKpRating.text = movie.rating.kpRating.toString()
+            val imdbRating = movie.rating.imdbRating
+            val kpRating = movie.rating.kpRating
+            tvImdbRating.text = String.format(Locale.US,"%.1f", imdbRating)
+            tvKpRating.text = String.format(Locale.US,"%.1f", kpRating)
         }
     }
 }

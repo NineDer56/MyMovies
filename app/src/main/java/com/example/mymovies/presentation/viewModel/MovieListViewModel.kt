@@ -1,0 +1,43 @@
+package com.example.mymovies.presentation.viewModel
+
+import android.app.Application
+import android.util.Log
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
+import com.example.mymovies.data.MovieItemRepositoryImpl
+import com.example.mymovies.domain.GetMovieItemListUseCase
+import com.example.mymovies.domain.MovieItem
+import kotlinx.coroutines.launch
+
+class MovieListViewModel(application: Application) : AndroidViewModel(application) {
+
+    private var page = 1
+    private val repository = MovieItemRepositoryImpl()
+    private val getMovieItemListUseCase = GetMovieItemListUseCase(repository)
+
+    private val _movies = MutableLiveData<List<MovieItem>>()
+    val movies : LiveData<List<MovieItem>>
+        get() = _movies
+
+    fun loadMovies(){
+        viewModelScope.launch {
+            try {
+                val res  = getMovieItemListUseCase.getMovieItemList(page)
+                Log.d(TAG, res.toString())
+                _movies.value = res
+                page++
+            } catch (e: Exception){
+                Log.d(TAG, e.toString())
+            }
+
+        }
+
+    }
+
+    companion object{
+        private const val TAG = "MovieListViewModel"
+    }
+
+}
