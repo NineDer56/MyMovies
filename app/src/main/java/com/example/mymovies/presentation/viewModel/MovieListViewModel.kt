@@ -21,17 +21,31 @@ class MovieListViewModel(application: Application) : AndroidViewModel(applicatio
     val movies : LiveData<List<MovieItem>>
         get() = _movies
 
+    private val _isLoading = MutableLiveData<Boolean>(false)
+    val isLoading : LiveData<Boolean>
+        get() = _isLoading
+
     fun loadMovies(){
+        if(isLoading.value == true){
+            return
+        }
         viewModelScope.launch {
             try {
+                _isLoading.value = true
+                val movieList = _movies.value?.toMutableList()
                 val res  = getMovieItemListUseCase.getMovieItemList(page)
-                Log.d(TAG, res.toString())
-                _movies.value = res
+                if(movieList != null){
+                    movieList.addAll(res)
+                    _movies.value = movieList
+                } else {
+                    _movies.value = res
+                }
+                Log.d(TAG, "page: $page")
                 page++
+                _isLoading.value = false
             } catch (e: Exception){
                 Log.d(TAG, e.toString())
             }
-
         }
 
     }

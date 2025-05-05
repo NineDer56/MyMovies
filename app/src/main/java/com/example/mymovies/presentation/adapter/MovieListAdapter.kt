@@ -1,5 +1,6 @@
 package com.example.mymovies.presentation.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
@@ -11,6 +12,8 @@ import java.util.Locale
 
 class MovieListAdapter : ListAdapter<MovieItem, MovieViewHolder>(MovieItemDiffCallback()) {
 
+    var onReachEndListener : OnReachEndListener? = null
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(
             R.layout.movie_item,
@@ -21,6 +24,11 @@ class MovieListAdapter : ListAdapter<MovieItem, MovieViewHolder>(MovieItemDiffCa
     }
 
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
+        Log.d(TAG, "onBindViewHolder, position: $position")
+        if(itemCount - position <= 10){
+            onReachEndListener?.onReachEnd()
+        }
+
         val movie = getItem(position)
 
         holder.apply {
@@ -30,5 +38,13 @@ class MovieListAdapter : ListAdapter<MovieItem, MovieViewHolder>(MovieItemDiffCa
             tvImdbRating.text = String.format(Locale.US,"%.1f", imdbRating)
             tvKpRating.text = String.format(Locale.US,"%.1f", kpRating)
         }
+    }
+
+    interface OnReachEndListener{
+        fun onReachEnd()
+    }
+
+    companion object{
+        private const val TAG = "MovieListAdapter"
     }
 }

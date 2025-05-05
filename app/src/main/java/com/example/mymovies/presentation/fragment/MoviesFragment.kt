@@ -2,6 +2,7 @@ package com.example.mymovies.presentation.fragment
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -40,13 +41,19 @@ class MoviesFragment : Fragment() {
         initRecyclerView(view.context)
         observeLiveData()
         viewModel.loadMovies()
-
+        Log.d(TAG, "onViewCreated")
     }
 
     private fun initRecyclerView(context: Context){
         with(binding){
             rvMovies.layoutManager = GridLayoutManager(context, 2)
             rvMovies.adapter = adapter
+            adapter.onReachEndListener = object : MovieListAdapter.OnReachEndListener{
+                override fun onReachEnd() {
+                    viewModel.loadMovies()
+                    Log.d(TAG, "onReachEnd")
+                }
+            }
         }
     }
 
@@ -55,12 +62,24 @@ class MoviesFragment : Fragment() {
             movies.observe(viewLifecycleOwner){
                 adapter.submitList(it)
             }
+
+            isLoading.observe(viewLifecycleOwner){
+                if(it){
+                    binding.progressBar.visibility = View.VISIBLE
+                } else {
+                    binding.progressBar.visibility = View.INVISIBLE
+                }
+            }
         }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    companion object{
+        private const val TAG = "MoviesFragment"
     }
 
 }
