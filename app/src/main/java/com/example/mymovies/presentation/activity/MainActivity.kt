@@ -1,6 +1,7 @@
 package com.example.mymovies.presentation.activity
 
 import android.os.Bundle
+import android.widget.Toolbar
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -17,5 +18,8 @@ class MainActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
+        val toolbar : androidx.appcompat.widget.Toolbar = findViewById(R.id.toolBar)
+        setSupportActionBar(toolbar)
     }
 }

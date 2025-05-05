@@ -25,6 +25,10 @@ class MovieListViewModel(application: Application) : AndroidViewModel(applicatio
     val isLoading : LiveData<Boolean>
         get() = _isLoading
 
+    init{
+        loadMovies()
+    }
+
     fun loadMovies(){
         if(isLoading.value == true){
             return

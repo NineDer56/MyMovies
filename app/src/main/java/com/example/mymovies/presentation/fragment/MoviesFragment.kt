@@ -4,11 +4,18 @@ import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
+import com.example.mymovies.R
 import com.example.mymovies.databinding.FragmentMoviesBinding
 import com.example.mymovies.presentation.adapter.MovieListAdapter
 import com.example.mymovies.presentation.viewModel.MovieListViewModel
@@ -18,6 +25,10 @@ class MoviesFragment : Fragment() {
     private var _binding : FragmentMoviesBinding? = null
     val binding : FragmentMoviesBinding
         get() = _binding ?: throw RuntimeException("FragmentMoviesBinding is null")
+
+    private val navController by lazy {
+        findNavController()
+    }
 
     private val viewModel : MovieListViewModel by lazy {
         ViewModelProvider(this)[MovieListViewModel::class.java]
@@ -38,10 +49,28 @@ class MoviesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initMenu()
         initRecyclerView(view.context)
         observeLiveData()
-        viewModel.loadMovies()
         Log.d(TAG, "onViewCreated")
+    }
+
+    private fun initMenu(){
+        requireActivity().addMenuProvider(object : MenuProvider{
+            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                menuInflater.inflate(R.menu.main_menu, menu)
+            }
+
+            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                return when(menuItem.itemId){
+                    R.id.itemFavourite ->{
+                        navController.navigate(R.id.action_moviesFragment_to_favouriteMoviesFragment)
+                        true
+                    }
+                    else -> false
+                }
+            }
+        }, viewLifecycleOwner, Lifecycle.State.RESUMED)
     }
 
     private fun initRecyclerView(context: Context){

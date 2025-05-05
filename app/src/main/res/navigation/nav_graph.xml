@@ -9,5 +9,14 @@
         android:id="@+id/moviesFragment"
         android:name="com.example.mymovies.presentation.fragment.MoviesFragment"
         android:label="fragment_movies"
-        tools:layout="@layout/fragment_movies" />
+        tools:layout="@layout/fragment_movies" >
+        <action
+            android:id="@+id/action_moviesFragment_to_favouriteMoviesFragment"
+            app:destination="@id/favouriteMoviesFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/favouriteMoviesFragment"
+        android:name="com.example.mymovies.presentation.fragment.FavouriteMoviesFragment"
+        android:label="fragment_favourite_movies"
+        tools:layout="@layout/fragment_favourite_movies" />
 </navigation>
