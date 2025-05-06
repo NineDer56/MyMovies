@@ -14,7 +14,7 @@ import kotlinx.coroutines.launch
 class MovieListViewModel(application: Application) : AndroidViewModel(application) {
 
     private var page = 1
-    private val repository = MovieItemRepositoryImpl()
+    private val repository = MovieItemRepositoryImpl(application)
     private val getMovieItemListUseCase = GetMovieItemListUseCase(repository)
 
     private val _movies = MutableLiveData<List<MovieItem>>()

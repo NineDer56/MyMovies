@@ -19,6 +19,7 @@ import com.example.mymovies.R
 import com.example.mymovies.databinding.FragmentMoviesBinding
 import com.example.mymovies.presentation.adapter.MovieListAdapter
 import com.example.mymovies.presentation.viewModel.MovieListViewModel
+import kotlin.math.sign
 
 class MoviesFragment : Fragment() {
 
@@ -53,6 +54,7 @@ class MoviesFragment : Fragment() {
         initRecyclerView(view.context)
         observeLiveData()
         Log.d(TAG, "onViewCreated")
+
     }
 
     private fun initMenu(){

@@ -1,4 +1,4 @@
-package com.example.mymovies.data
+package com.example.mymovies.data.retrofit
 
 import com.example.mymovies.domain.MovieResponse
 import retrofit2.http.GET

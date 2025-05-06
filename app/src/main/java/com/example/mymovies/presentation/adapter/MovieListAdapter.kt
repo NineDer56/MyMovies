@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import com.bumptech.glide.Glide
 import com.example.mymovies.R
+import com.example.mymovies.data.room.MovieItemDatabase
 import com.example.mymovies.domain.MovieItem
 import java.math.RoundingMode
 import java.util.Locale
@@ -43,6 +44,7 @@ class MovieListAdapter : ListAdapter<MovieItem, MovieViewHolder>(MovieItemDiffCa
     interface OnReachEndListener{
         fun onReachEnd()
     }
+
 
     companion object{
         private const val TAG = "MovieListAdapter"
