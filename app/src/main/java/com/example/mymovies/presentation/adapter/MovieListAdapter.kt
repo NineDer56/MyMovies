@@ -14,6 +14,7 @@ import java.util.Locale
 class MovieListAdapter : ListAdapter<MovieItem, MovieViewHolder>(MovieItemDiffCallback()) {
 
     var onReachEndListener : OnReachEndListener? = null
+    var onMovieClickListener : OnMovieClickListener? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(
@@ -38,11 +39,19 @@ class MovieListAdapter : ListAdapter<MovieItem, MovieViewHolder>(MovieItemDiffCa
             val kpRating = movie.rating.kpRating
             tvImdbRating.text = String.format(Locale.US,"%.1f", imdbRating)
             tvKpRating.text = String.format(Locale.US,"%.1f", kpRating)
+
+            itemView.setOnClickListener {
+                onMovieClickListener?.onMovieClick(movie)
+            }
         }
     }
 
     interface OnReachEndListener{
         fun onReachEnd()
+    }
+
+    interface OnMovieClickListener{
+        fun onMovieClick(movie : MovieItem)
     }
 
 

@@ -9,14 +9,39 @@
         android:id="@+id/moviesFragment"
         android:name="com.example.mymovies.presentation.fragment.MoviesFragment"
         android:label="fragment_movies"
-        tools:layout="@layout/fragment_movies" >
+        tools:layout="@layout/fragment_movies">
         <action
             android:id="@+id/action_moviesFragment_to_favouriteMoviesFragment"
-            app:destination="@id/favouriteMoviesFragment" />
+            app:destination="@id/favouriteMoviesFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/action_moviesFragment_to_movieDetailFragment"
+            app:destination="@id/movieDetailFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
     </fragment>
     <fragment
         android:id="@+id/favouriteMoviesFragment"
         android:name="com.example.mymovies.presentation.fragment.FavouriteMoviesFragment"
         android:label="fragment_favourite_movies"
-        tools:layout="@layout/fragment_favourite_movies" />
+        tools:layout="@layout/fragment_favourite_movies">
+        <action
+            android:id="@+id/action_favouriteMoviesFragment_to_movieDetailFragment"
+            app:destination="@id/movieDetailFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
+    <fragment
+        android:id="@+id/movieDetailFragment"
+        android:name="com.example.mymovies.presentation.fragment.MovieDetailFragment"
+        android:label="fragment_movie_detail"
+        tools:layout="@layout/fragment_movie_detail">
+        <argument
+            android:name="movie"
+            app:argType="com.example.mymovies.domain.MovieItem" />
+    </fragment>
 </navigation>

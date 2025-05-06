@@ -17,6 +17,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.mymovies.R
 import com.example.mymovies.databinding.FragmentMoviesBinding
+import com.example.mymovies.domain.MovieItem
 import com.example.mymovies.presentation.adapter.MovieListAdapter
 import com.example.mymovies.presentation.viewModel.MovieListViewModel
 import kotlin.math.sign
@@ -55,6 +56,7 @@ class MoviesFragment : Fragment() {
         observeLiveData()
         Log.d(TAG, "onViewCreated")
 
+
     }
 
     private fun initMenu(){
@@ -85,7 +87,17 @@ class MoviesFragment : Fragment() {
                     Log.d(TAG, "onReachEnd")
                 }
             }
+
+            adapter.onMovieClickListener = object : MovieListAdapter.OnMovieClickListener{
+                override fun onMovieClick(movie: MovieItem) {
+                    navController.navigate(
+                        MoviesFragmentDirections.actionMoviesFragmentToMovieDetailFragment(movie)
+                    )
+                }
+            }
         }
+
+
     }
 
     private fun observeLiveData(){
