@@ -16,6 +16,7 @@ import com.bumptech.glide.Glide
 import com.example.mymovies.databinding.FragmentMovieDetailBinding
 import com.example.mymovies.domain.dto.movie.MovieItem
 import com.example.mymovies.domain.dto.trailer.Trailer
+import com.example.mymovies.presentation.adapter.ReviewListAdapter
 import com.example.mymovies.presentation.adapter.TrailerListAdapter
 import com.example.mymovies.presentation.viewModel.MovieDetailViewModel
 
@@ -35,8 +36,12 @@ class MovieDetailFragment : Fragment() {
         ViewModelProvider(this)[MovieDetailViewModel::class.java]
     }
 
-    private val adapter : TrailerListAdapter by lazy {
+    private val trailerAdapter : TrailerListAdapter by lazy {
         TrailerListAdapter()
+    }
+
+    private val reviewAdapter : ReviewListAdapter by lazy {
+        ReviewListAdapter()
     }
 
     private lateinit var starOn : Drawable
@@ -64,10 +69,12 @@ class MovieDetailFragment : Fragment() {
         }
 
         initStars(view)
-        initRecyclerView(view)
+        initTrailerRecyclerView(view)
+        initReviewRecyclerView(view)
         observeViewModel(movie)
         viewModel.loadMovie(movie.id)
         viewModel.loadTrailers(movie.id)
+        viewModel.loadReviews(movie.id)
     }
 
     private fun observeViewModel(movie: MovieItem){
@@ -86,21 +93,32 @@ class MovieDetailFragment : Fragment() {
         }
 
         viewModel.trailers.observe(viewLifecycleOwner){trailers ->
-            adapter.setTrailers(trailers)
+            trailerAdapter.setTrailers(trailers)
+        }
+
+        viewModel.reviews.observe(viewLifecycleOwner){reviews ->
+            reviewAdapter.setReviews(reviews)
         }
     }
 
-    private fun initRecyclerView(view : View){
+    private fun initTrailerRecyclerView(view : View){
         with(binding.rvTrailers){
             layoutManager = LinearLayoutManager(view.context)
-            adapter = this@MovieDetailFragment.adapter
+            adapter = this@MovieDetailFragment.trailerAdapter
         }
 
-        adapter.onPlayClickListener = object : TrailerListAdapter.OnPlayClickListener{
+        trailerAdapter.onPlayClickListener = object : TrailerListAdapter.OnPlayClickListener{
             override fun onPlayClick(trailer: Trailer) {
                 val intent = Intent(Intent.ACTION_VIEW, Uri.parse(trailer.url))
                 startActivity(intent)
             }
+        }
+    }
+
+    private fun initReviewRecyclerView(view : View){
+        with(binding.rvReviews){
+            layoutManager = LinearLayoutManager(view.context)
+            adapter = reviewAdapter
         }
     }
 

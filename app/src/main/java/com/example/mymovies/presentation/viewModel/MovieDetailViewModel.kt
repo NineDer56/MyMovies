@@ -10,7 +10,9 @@ import com.example.mymovies.data.repository.MovieItemRepositoryImpl
 import com.example.mymovies.domain.usecase.AddFavouriteMovieUseCase
 import com.example.mymovies.domain.usecase.GetFavouriteMovieItemUseCase
 import com.example.mymovies.domain.dto.movie.MovieItem
+import com.example.mymovies.domain.dto.review.Review
 import com.example.mymovies.domain.dto.trailer.Trailer
+import com.example.mymovies.domain.usecase.GetReviewListUseCase
 import com.example.mymovies.domain.usecase.GetTrailerListUseCase
 import com.example.mymovies.domain.usecase.RemoveFavouriteMovieItemUseCase
 import kotlinx.coroutines.Dispatchers
@@ -27,11 +29,16 @@ class MovieDetailViewModel(application: Application) : AndroidViewModel(applicat
     val trailers : LiveData<List<Trailer>>
         get() = _trailers
 
+    private var _reviews = MutableLiveData<List<Review>>()
+    val reviews : LiveData<List<Review>>
+        get() = _reviews
+
     private val repository = MovieItemRepositoryImpl(application)
     private val getFavouriteMovieItemUseCase = GetFavouriteMovieItemUseCase(repository)
     private val addFavouriteMovieItemUseCase = AddFavouriteMovieUseCase(repository)
     private val removeFavouriteMovieItemUseCase = RemoveFavouriteMovieItemUseCase(repository)
     private val getTrailerListUseCase = GetTrailerListUseCase(repository)
+    private val getReviewListUseCase = GetReviewListUseCase(repository)
 
     //TODO вынести в инит блок
     fun loadMovie(movieId: Int){
@@ -64,6 +71,17 @@ class MovieDetailViewModel(application: Application) : AndroidViewModel(applicat
                 _trailers.value = trailers
             } catch (e: Exception){
                 Log.d(TAG, e.message ?: "loadTrailers failed")
+            }
+        }
+    }
+
+    fun loadReviews(movieId: Int){
+        viewModelScope.launch {
+            try {
+                val reviews = getReviewListUseCase.getReviewList(movieId)
+                _reviews.value = reviews
+            } catch (e: Exception) {
+                Log.d(TAG, e.message ?: "loadReviews failed")
             }
         }
     }
