@@ -6,6 +6,8 @@ interface MovieItemRepository {
 
     suspend fun getMovieItemList(page : Int) : List<MovieItem>
 
+    suspend fun getTrailerList(movieId: Int) : List<Trailer>
+
     suspend fun getFavouriteMovieItemList() : List<MovieItem>
 
     suspend fun getFavouriteMovieItem(movieId : Int) : MovieItem?

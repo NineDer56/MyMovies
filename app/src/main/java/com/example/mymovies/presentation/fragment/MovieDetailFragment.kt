@@ -1,6 +1,8 @@
 package com.example.mymovies.presentation.fragment
 
+import android.content.Intent
 import android.graphics.drawable.Drawable
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,15 +11,18 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.mymovies.databinding.FragmentMovieDetailBinding
 import com.example.mymovies.domain.MovieItem
+import com.example.mymovies.domain.Trailer
+import com.example.mymovies.presentation.adapter.TrailerListAdapter
 import com.example.mymovies.presentation.viewModel.MovieDetailViewModel
 
 
 class MovieDetailFragment : Fragment() {
 
-    // TODO Добавить: трейлеры, отзывы, работу с избранными, передалть MovieItem
+    // TODO Добавить: трейлеры, отзывы, проверить эффективность работы с избранными передалть MovieItem
 
 
     private var _binding : FragmentMovieDetailBinding? = null
@@ -28,6 +33,10 @@ class MovieDetailFragment : Fragment() {
 
     private val viewModel : MovieDetailViewModel by lazy {
         ViewModelProvider(this)[MovieDetailViewModel::class.java]
+    }
+
+    private val adapter : TrailerListAdapter by lazy {
+        TrailerListAdapter()
     }
 
     private lateinit var starOn : Drawable
@@ -55,8 +64,10 @@ class MovieDetailFragment : Fragment() {
         }
 
         initStars(view)
+        initRecyclerView(view)
         observeViewModel(movie)
         viewModel.loadMovie(movie.id)
+        viewModel.loadTrailers(movie.id)
     }
 
     private fun observeViewModel(movie: MovieItem){
@@ -72,6 +83,24 @@ class MovieDetailFragment : Fragment() {
                    viewModel.addMovie(movie)
                }
            }
+        }
+
+        viewModel.trailers.observe(viewLifecycleOwner){trailers ->
+            adapter.setTrailers(trailers)
+        }
+    }
+
+    private fun initRecyclerView(view : View){
+        with(binding.rvTrailers){
+            layoutManager = LinearLayoutManager(view.context)
+            adapter = this@MovieDetailFragment.adapter
+        }
+
+        adapter.onPlayClickListener = object : TrailerListAdapter.OnPlayClickListener{
+            override fun onPlayClick(trailer: Trailer) {
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(trailer.url))
+                startActivity(intent)
+            }
         }
     }
 

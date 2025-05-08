@@ -8,6 +8,7 @@ import com.example.mymovies.data.room.MovieItemDatabase
 import com.example.mymovies.data.room.MovieItemMapper
 import com.example.mymovies.domain.MovieItem
 import com.example.mymovies.domain.MovieItemRepository
+import com.example.mymovies.domain.Trailer
 import java.lang.Appendable
 
 class MovieItemRepositoryImpl(
@@ -19,6 +20,10 @@ class MovieItemRepositoryImpl(
 
     override suspend fun getMovieItemList(page: Int): List<MovieItem> {
         return MovieApiFactory.movieApiService.loadMovies(page).movies
+    }
+
+    override suspend fun getTrailerList(movieId: Int): List<Trailer> {
+        return MovieApiFactory.movieApiService.loadTrailers(movieId).trailerResponse.trailers
     }
 
     override suspend fun getFavouriteMovieItemList(): List<MovieItem> {
