@@ -1,7 +1,6 @@
 package com.example.mymovies.data.room
 
-import androidx.lifecycle.LiveData
-import com.example.mymovies.domain.MovieItem
+import com.example.mymovies.domain.dto.movie.MovieItem
 
 class MovieItemMapper {
     fun dbModelToMovieItem(dbModel: MovieItemDbModel): MovieItem {

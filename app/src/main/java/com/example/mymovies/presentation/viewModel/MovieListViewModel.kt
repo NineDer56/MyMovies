@@ -6,9 +6,9 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.example.mymovies.data.MovieItemRepositoryImpl
+import com.example.mymovies.data.repository.MovieItemRepositoryImpl
 import com.example.mymovies.domain.usecase.GetMovieItemListUseCase
-import com.example.mymovies.domain.MovieItem
+import com.example.mymovies.domain.dto.movie.MovieItem
 import kotlinx.coroutines.launch
 
 class MovieListViewModel(application: Application) : AndroidViewModel(application) {

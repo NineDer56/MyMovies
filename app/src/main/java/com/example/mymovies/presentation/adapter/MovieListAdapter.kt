@@ -6,9 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import com.bumptech.glide.Glide
 import com.example.mymovies.R
-import com.example.mymovies.data.room.MovieItemDatabase
-import com.example.mymovies.domain.MovieItem
-import java.math.RoundingMode
+import com.example.mymovies.domain.dto.movie.MovieItem
 import java.util.Locale
 
 class MovieListAdapter : ListAdapter<MovieItem, MovieViewHolder>(MovieItemDiffCallback()) {

@@ -1,6 +1,7 @@
-package com.example.mymovies.domain
+package com.example.mymovies.domain.repository
 
-import androidx.lifecycle.LiveData
+import com.example.mymovies.domain.dto.movie.MovieItem
+import com.example.mymovies.domain.dto.trailer.Trailer
 
 interface MovieItemRepository {
 

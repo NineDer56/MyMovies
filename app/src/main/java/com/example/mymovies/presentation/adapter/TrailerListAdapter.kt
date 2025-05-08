@@ -7,7 +7,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mymovies.R
-import com.example.mymovies.domain.Trailer
+import com.example.mymovies.domain.dto.trailer.Trailer
 
 class TrailerListAdapter : RecyclerView.Adapter<TrailerListAdapter.TrailerViewHolder>() {
 

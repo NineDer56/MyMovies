@@ -10,7 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.mymovies.databinding.FragmentFavouriteMoviesBinding
-import com.example.mymovies.domain.MovieItem
+import com.example.mymovies.domain.dto.movie.MovieItem
 import com.example.mymovies.presentation.adapter.MovieListAdapter
 import com.example.mymovies.presentation.viewModel.FavouriteMoviesViewModel
 

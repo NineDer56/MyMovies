@@ -1,6 +1,5 @@
-package com.example.mymovies.domain
+package com.example.mymovies.domain.dto.movie
 
-import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 

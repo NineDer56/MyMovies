@@ -1,9 +1,7 @@
 package com.example.mymovies.data.retrofit
 
-import androidx.room.Insert
-import com.example.mymovies.domain.MovieResponse
-import com.example.mymovies.domain.Trailer
-import com.example.mymovies.domain.TrailerResponse
+import com.example.mymovies.domain.dto.movie.MovieResponse
+import com.example.mymovies.domain.dto.trailer.TrailerResponse
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query

@@ -1,15 +1,12 @@
-package com.example.mymovies.data
+package com.example.mymovies.data.repository
 
 import android.app.Application
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.map
 import com.example.mymovies.data.retrofit.MovieApiFactory
 import com.example.mymovies.data.room.MovieItemDatabase
 import com.example.mymovies.data.room.MovieItemMapper
-import com.example.mymovies.domain.MovieItem
-import com.example.mymovies.domain.MovieItemRepository
-import com.example.mymovies.domain.Trailer
-import java.lang.Appendable
+import com.example.mymovies.domain.dto.movie.MovieItem
+import com.example.mymovies.domain.repository.MovieItemRepository
+import com.example.mymovies.domain.dto.trailer.Trailer
 
 class MovieItemRepositoryImpl(
     private val application: Application

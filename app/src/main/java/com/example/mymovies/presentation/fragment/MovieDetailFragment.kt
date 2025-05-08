@@ -14,8 +14,8 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.mymovies.databinding.FragmentMovieDetailBinding
-import com.example.mymovies.domain.MovieItem
-import com.example.mymovies.domain.Trailer
+import com.example.mymovies.domain.dto.movie.MovieItem
+import com.example.mymovies.domain.dto.trailer.Trailer
 import com.example.mymovies.presentation.adapter.TrailerListAdapter
 import com.example.mymovies.presentation.viewModel.MovieDetailViewModel
 
