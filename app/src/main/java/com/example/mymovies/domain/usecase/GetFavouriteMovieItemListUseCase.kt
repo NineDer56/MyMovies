@@ -1,6 +1,7 @@
-package com.example.mymovies.domain
+package com.example.mymovies.domain.usecase
 
-import androidx.lifecycle.LiveData
+import com.example.mymovies.domain.MovieItem
+import com.example.mymovies.domain.MovieItemRepository
 
 class GetFavouriteMovieItemListUseCase(
     private val repository: MovieItemRepository

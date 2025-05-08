@@ -1,24 +1,37 @@
 package com.example.mymovies.presentation.fragment
 
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
-import com.example.mymovies.R
 import com.example.mymovies.databinding.FragmentMovieDetailBinding
-import com.example.mymovies.databinding.FragmentMoviesBinding
+import com.example.mymovies.domain.MovieItem
+import com.example.mymovies.presentation.viewModel.MovieDetailViewModel
 
 
 class MovieDetailFragment : Fragment() {
+
+    // TODO Добавить: трейлеры, отзывы, работу с избранными, передалть MovieItem
+
 
     private var _binding : FragmentMovieDetailBinding? = null
     val binding : FragmentMovieDetailBinding
         get() = _binding ?: throw RuntimeException("FragmentMovieDetailBinding is null")
 
     private val args : MovieDetailFragmentArgs by navArgs()
+
+    private val viewModel : MovieDetailViewModel by lazy {
+        ViewModelProvider(this)[MovieDetailViewModel::class.java]
+    }
+
+    private lateinit var starOn : Drawable
+    private lateinit var starOff : Drawable
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -41,6 +54,37 @@ class MovieDetailFragment : Fragment() {
             tvDescription.text = movie.description
         }
 
+        initStars(view)
+        observeViewModel(movie)
+        viewModel.loadMovie(movie.id)
+    }
+
+    private fun observeViewModel(movie: MovieItem){
+        viewModel.movie.observe(viewLifecycleOwner){movieFromDb ->
+           if(movieFromDb != null){
+               binding.ivStar.setImageDrawable(starOn)
+               binding.ivStar.setOnClickListener{
+                   viewModel.removeMovie(movie)
+               }
+           } else {
+               binding.ivStar.setImageDrawable(starOff)
+               binding.ivStar.setOnClickListener{
+                   viewModel.addMovie(movie)
+               }
+           }
+        }
+    }
+
+    private fun initStars(view : View){
+        starOn = ContextCompat.getDrawable(
+            view.context,
+            android.R.drawable.star_big_on
+        ) ?: throw RuntimeException("drawable starOn is null")
+
+        starOff = ContextCompat.getDrawable(
+            view.context,
+            android.R.drawable.star_big_off
+        ) ?: throw RuntimeException("drawable starOff is null")
     }
 
 

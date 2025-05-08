@@ -25,7 +25,16 @@ class MovieItemRepositoryImpl(
         return dao.getAllFavouriteMovies().map { mapper.dbModelToMovieItem(it) }
     }
 
+    override suspend fun getFavouriteMovieItem(movieId : Int): MovieItem? {
+        val movieFromDb = dao.getFavouriteMovie(movieId) ?: return null
+        return mapper.dbModelToMovieItem(movieFromDb)
+    }
+
     override suspend fun addFavouriteMovie(movieItem: MovieItem) {
         dao.addMovie(mapper.movieItemToDbModel(movieItem))
+    }
+
+    override suspend fun removeFavouriteMovie(movieItem: MovieItem) {
+        dao.removeMovie(mapper.movieItemToDbModel(movieItem))
     }
 }

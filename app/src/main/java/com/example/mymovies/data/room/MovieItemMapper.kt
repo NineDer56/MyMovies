@@ -16,6 +16,20 @@ class MovieItemMapper {
         )
     }
 
+//    fun dbModelToMovieItemNullable(dbModel: MovieItemDbModel?): MovieItem? {
+//        if(dbModel == null)
+//            return null
+//        return MovieItem(
+//            id = dbModel.id,
+//            name = dbModel.name,
+//            type = dbModel.type,
+//            year = dbModel.year,
+//            description = dbModel.description,
+//            rating = dbModel.rating,
+//            poster = dbModel.poster
+//        )
+//    }
+
     fun movieItemToDbModel(movieItem: MovieItem) : MovieItemDbModel{
         return MovieItemDbModel(
             id = movieItem.id,

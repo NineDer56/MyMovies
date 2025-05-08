@@ -1,16 +1,16 @@
 package com.example.mymovies.presentation.viewModel
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.mymovies.data.MovieItemRepositoryImpl
-import com.example.mymovies.domain.GetFavouriteMovieItemListUseCase
 import com.example.mymovies.domain.MovieItem
+import com.example.mymovies.domain.usecase.GetFavouriteMovieItemListUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class FavouriteMoviesViewModel(
     application: Application
@@ -24,13 +24,11 @@ class FavouriteMoviesViewModel(
     private val getFavouriteMovieItemListUseCase = GetFavouriteMovieItemListUseCase(repository)
 
     fun loadMoviesFromDb() {
-        viewModelScope.launch(Dispatchers.IO) {
-            try {
-                val movies = getFavouriteMovieItemListUseCase.getFavouriteMovieItemList()
-                _movies.value = movies
-            } catch (e: Exception) {
-                e.message?.let { Log.d(TAG, it) }
+        viewModelScope.launch {
+            val movies = withContext(Dispatchers.IO){
+                getFavouriteMovieItemListUseCase.getFavouriteMovieItemList()
             }
+            _movies.value = movies
         }
     }
 

@@ -7,7 +7,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.mymovies.data.MovieItemRepositoryImpl
-import com.example.mymovies.domain.GetMovieItemListUseCase
+import com.example.mymovies.domain.usecase.GetMovieItemListUseCase
 import com.example.mymovies.domain.MovieItem
 import kotlinx.coroutines.launch
 

@@ -7,8 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
-import com.example.mymovies.data.room.MovieItemDatabase
 import com.example.mymovies.databinding.FragmentFavouriteMoviesBinding
 import com.example.mymovies.domain.MovieItem
 import com.example.mymovies.presentation.adapter.MovieListAdapter
@@ -28,6 +28,10 @@ class FavouriteMoviesFragment : Fragment() {
         ViewModelProvider(this)[FavouriteMoviesViewModel::class.java]
     }
 
+    private val navController by lazy {
+        findNavController()
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -40,6 +44,7 @@ class FavouriteMoviesFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         initRecyclerView(view.context)
         observeLiveData()
+        viewModel.loadMoviesFromDb()
     }
 
     private fun observeLiveData() {
@@ -51,7 +56,19 @@ class FavouriteMoviesFragment : Fragment() {
     private fun initRecyclerView(context: Context) {
         with(binding.rvFavouriteMovies) {
             layoutManager = GridLayoutManager(context, 2)
-            adapter = adapter
+            adapter = this@FavouriteMoviesFragment.adapter
+            // из-за одинаковых названий adapter
+            // в строке adapter = adapter были 2 одинаковых объекта
+            // вместо (MovieListAdapter() был rv.adapter)
+            // и в итоге rv.adapter прсиваивался null
+        }
+
+        adapter.onMovieClickListener = object : MovieListAdapter.OnMovieClickListener{
+            override fun onMovieClick(movie: MovieItem) {
+                navController.navigate(
+                    FavouriteMoviesFragmentDirections.actionFavouriteMoviesFragmentToMovieDetailFragment(movie)
+                )
+            }
         }
     }
 
