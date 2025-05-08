@@ -37,7 +37,7 @@ class MovieListViewModel(application: Application) : AndroidViewModel(applicatio
             try {
                 _isLoading.value = true
                 val movieList = _movies.value?.toMutableList()
-                val res  = getMovieItemListUseCase.getMovieItemList(page)
+                val res  = getMovieItemListUseCase(page)
                 if(movieList != null){
                     movieList.addAll(res)
                     _movies.value = movieList

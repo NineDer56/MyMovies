@@ -6,7 +6,6 @@ import com.example.mymovies.domain.repository.MovieItemRepository
 class AddFavouriteMovieUseCase(
     private val repository: MovieItemRepository
 ) {
-    suspend fun addFavouriteMovie(movie: MovieItem){
+    suspend operator fun invoke(movie: MovieItem) =
         repository.addFavouriteMovie(movie)
-    }
 }

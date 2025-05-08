@@ -6,8 +6,6 @@ import com.example.mymovies.domain.repository.MovieItemRepository
 class GetFavouriteMovieItemListUseCase(
     private val repository: MovieItemRepository
 ) {
-
-    suspend fun getFavouriteMovieItemList() : List<MovieItem> {
-        return repository.getFavouriteMovieItemList()
-    }
+    suspend operator fun invoke(): List<MovieItem> =
+        repository.getFavouriteMovieItemList()
 }

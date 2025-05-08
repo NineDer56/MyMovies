@@ -26,7 +26,7 @@ class FavouriteMoviesViewModel(
     fun loadMoviesFromDb() {
         viewModelScope.launch {
             val movies = withContext(Dispatchers.IO){
-                getFavouriteMovieItemListUseCase.getFavouriteMovieItemList()
+                getFavouriteMovieItemListUseCase()
             }
             _movies.value = movies
         }

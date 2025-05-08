@@ -43,7 +43,7 @@ class MovieDetailViewModel(application: Application) : AndroidViewModel(applicat
     //TODO вынести в инит блок
     fun loadMovie(movieId: Int){
         viewModelScope.launch(Dispatchers.IO){
-            val movieFromDb = getFavouriteMovieItemUseCase.getFavouriteMovieItem(movieId)
+            val movieFromDb = getFavouriteMovieItemUseCase(movieId)
             withContext(Dispatchers.Main){
                 _movie.value = movieFromDb
             }
@@ -52,14 +52,14 @@ class MovieDetailViewModel(application: Application) : AndroidViewModel(applicat
 
     fun addMovie(movie: MovieItem){
         viewModelScope.launch{
-            addFavouriteMovieItemUseCase.addFavouriteMovie(movie)
+            addFavouriteMovieItemUseCase(movie)
             loadMovie(movie.id)
         }
     }
 
     fun removeMovie(movie : MovieItem){
         viewModelScope.launch {
-            removeFavouriteMovieItemUseCase.removeFavouriteMovieItem(movie)
+            removeFavouriteMovieItemUseCase(movie)
             loadMovie(movie.id)
         }
     }
@@ -67,7 +67,7 @@ class MovieDetailViewModel(application: Application) : AndroidViewModel(applicat
     fun loadTrailers(movieId: Int){
         viewModelScope.launch {
             try {
-                val trailers = getTrailerListUseCase.getTrailerList(movieId)
+                val trailers = getTrailerListUseCase(movieId)
                 _trailers.value = trailers
             } catch (e: Exception){
                 Log.d(TAG, e.message ?: "loadTrailers failed")
@@ -78,7 +78,7 @@ class MovieDetailViewModel(application: Application) : AndroidViewModel(applicat
     fun loadReviews(movieId: Int){
         viewModelScope.launch {
             try {
-                val reviews = getReviewListUseCase.getReviewList(movieId)
+                val reviews = getReviewListUseCase(movieId)
                 _reviews.value = reviews
             } catch (e: Exception) {
                 Log.d(TAG, e.message ?: "loadReviews failed")

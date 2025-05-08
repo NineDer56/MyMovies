@@ -54,8 +54,6 @@ class MoviesFragment : Fragment() {
         initRecyclerView(view.context)
         observeLiveData()
         Log.d(TAG, "onViewCreated")
-
-
     }
 
     private fun initMenu(){
@@ -95,8 +93,6 @@ class MoviesFragment : Fragment() {
                 }
             }
         }
-
-
     }
 
     private fun observeLiveData(){
@@ -123,5 +119,4 @@ class MoviesFragment : Fragment() {
     companion object{
         private const val TAG = "MoviesFragment"
     }
-
 }

@@ -6,8 +6,6 @@ import com.example.mymovies.domain.repository.MovieItemRepository
 class RemoveFavouriteMovieItemUseCase(
     private val repository: MovieItemRepository
 ) {
-
-    suspend fun removeFavouriteMovieItem(movie: MovieItem){
+    suspend operator fun invoke(movie: MovieItem) =
         repository.removeFavouriteMovie(movie)
-    }
 }
