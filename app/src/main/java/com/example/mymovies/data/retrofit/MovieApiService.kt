@@ -1,8 +1,8 @@
 package com.example.mymovies.data.retrofit
 
-import com.example.mymovies.domain.dto.movie.MovieResponse
-import com.example.mymovies.domain.dto.review.ReviewResponse
-import com.example.mymovies.domain.dto.trailer.TrailerResponse
+import com.example.mymovies.data.MovieResponse
+import com.example.mymovies.data.ReviewResponse
+import com.example.mymovies.data.TrailerResponse
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query

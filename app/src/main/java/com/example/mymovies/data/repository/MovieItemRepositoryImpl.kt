@@ -2,8 +2,9 @@ package com.example.mymovies.data.repository
 
 import android.app.Application
 import com.example.mymovies.data.retrofit.MovieApiFactory
+import com.example.mymovies.data.retrofit.MovieNwMapper
 import com.example.mymovies.data.room.MovieItemDatabase
-import com.example.mymovies.data.room.MovieItemMapper
+import com.example.mymovies.data.room.MovieDbMapper
 import com.example.mymovies.domain.dto.movie.MovieItem
 import com.example.mymovies.domain.dto.review.Review
 import com.example.mymovies.domain.repository.MovieItemRepository
@@ -14,34 +15,38 @@ class MovieItemRepositoryImpl(
 ) : MovieItemRepository {
 
     private val dao = MovieItemDatabase.getInstance(application).movieDao()
-    private val mapper = MovieItemMapper()
+    private val dbMapper = MovieDbMapper
+    private val nwMapper = MovieNwMapper
 
     override suspend fun getMovieItemList(page: Int): List<MovieItem> {
         return MovieApiFactory.movieApiService.loadMovies(page).movies
+            .map { nwMapper.nwModelToMovieItem(it) }
     }
 
     override suspend fun getTrailerList(movieId: Int): List<Trailer> {
         return MovieApiFactory.movieApiService.loadTrailers(movieId).trailerResponse.trailers
+            .map { nwMapper.nwModelToTrailer(it) }
     }
 
     override suspend fun getReviewList(movieId: Int): List<Review> {
         return MovieApiFactory.movieApiService.loadReviews(movieId).reviews
+            .map { nwMapper.nwModelToReview(it) }
     }
 
     override suspend fun getFavouriteMovieItemList(): List<MovieItem> {
-        return dao.getAllFavouriteMovies().map { mapper.dbModelToMovieItem(it) }
+        return dao.getAllFavouriteMovies().map { dbMapper.dbModelToMovieItem(it) }
     }
 
-    override suspend fun getFavouriteMovieItem(movieId : Int): MovieItem? {
+    override suspend fun getFavouriteMovieItem(movieId: Int): MovieItem? {
         val movieFromDb = dao.getFavouriteMovie(movieId) ?: return null
-        return mapper.dbModelToMovieItem(movieFromDb)
+        return dbMapper.dbModelToMovieItem(movieFromDb)
     }
 
     override suspend fun addFavouriteMovie(movieItem: MovieItem) {
-        dao.addMovie(mapper.movieItemToDbModel(movieItem))
+        dao.addMovie(dbMapper.movieItemToDbModel(movieItem))
     }
 
     override suspend fun removeFavouriteMovie(movieItem: MovieItem) {
-        dao.removeMovie(mapper.movieItemToDbModel(movieItem))
+        dao.removeMovie(dbMapper.movieItemToDbModel(movieItem))
     }
 }

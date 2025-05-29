@@ -18,6 +18,7 @@ import com.example.mymovies.domain.dto.movie.MovieItem
 import com.example.mymovies.domain.dto.trailer.Trailer
 import com.example.mymovies.presentation.adapter.ReviewListAdapter
 import com.example.mymovies.presentation.adapter.TrailerListAdapter
+import com.example.mymovies.presentation.model.MovieUiMapper
 import com.example.mymovies.presentation.viewModel.MovieDetailViewModel
 
 
@@ -44,6 +45,8 @@ class MovieDetailFragment : Fragment() {
         ReviewListAdapter()
     }
 
+    private val mapper = MovieUiMapper
+
     private lateinit var starOn : Drawable
     private lateinit var starOff : Drawable
 
@@ -57,7 +60,7 @@ class MovieDetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val movie = args.movie
+        val movie = mapper.uiModelToMovieItem(args.movie)
 
         with(binding){
             Glide.with(view.context)

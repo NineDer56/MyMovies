@@ -19,9 +19,12 @@ import com.example.mymovies.R
 import com.example.mymovies.databinding.FragmentMoviesBinding
 import com.example.mymovies.domain.dto.movie.MovieItem
 import com.example.mymovies.presentation.adapter.MovieListAdapter
+import com.example.mymovies.presentation.model.MovieUiMapper
 import com.example.mymovies.presentation.viewModel.MovieListViewModel
 
 class MoviesFragment : Fragment() {
+
+    private val mapper = MovieUiMapper
 
     private var _binding : FragmentMoviesBinding? = null
     val binding : FragmentMoviesBinding
@@ -88,7 +91,7 @@ class MoviesFragment : Fragment() {
             adapter.onMovieClickListener = object : MovieListAdapter.OnMovieClickListener{
                 override fun onMovieClick(movie: MovieItem) {
                     navController.navigate(
-                        MoviesFragmentDirections.actionMoviesFragmentToMovieDetailFragment(movie)
+                        MoviesFragmentDirections.actionMoviesFragmentToMovieDetailFragment(mapper.movieItemToUiModel(movie))
                     )
                 }
             }

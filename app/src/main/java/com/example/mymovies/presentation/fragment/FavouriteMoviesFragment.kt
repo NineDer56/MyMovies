@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.example.mymovies.databinding.FragmentFavouriteMoviesBinding
 import com.example.mymovies.domain.dto.movie.MovieItem
 import com.example.mymovies.presentation.adapter.MovieListAdapter
+import com.example.mymovies.presentation.model.MovieUiMapper
 import com.example.mymovies.presentation.viewModel.FavouriteMoviesViewModel
 
 class FavouriteMoviesFragment : Fragment() {
@@ -31,6 +32,8 @@ class FavouriteMoviesFragment : Fragment() {
     private val navController by lazy {
         findNavController()
     }
+
+    private val mapper = MovieUiMapper
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -66,7 +69,7 @@ class FavouriteMoviesFragment : Fragment() {
         adapter.onMovieClickListener = object : MovieListAdapter.OnMovieClickListener{
             override fun onMovieClick(movie: MovieItem) {
                 navController.navigate(
-                    FavouriteMoviesFragmentDirections.actionFavouriteMoviesFragmentToMovieDetailFragment(movie)
+                    FavouriteMoviesFragmentDirections.actionFavouriteMoviesFragmentToMovieDetailFragment(mapper.movieItemToUiModel(movie))
                 )
             }
         }

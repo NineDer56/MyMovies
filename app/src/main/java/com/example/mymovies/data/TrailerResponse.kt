@@ -1,4 +1,4 @@
-package com.example.mymovies.domain.dto.trailer
+package com.example.mymovies.data
 
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
