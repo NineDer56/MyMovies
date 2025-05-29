@@ -23,16 +23,6 @@ class MovieItemRepositoryImpl(
             .map { nwMapper.nwModelToMovieItem(it) }
     }
 
-    override suspend fun getTrailerList(movieId: Int): List<Trailer> {
-        return MovieApiFactory.movieApiService.loadTrailers(movieId).trailerResponse.trailers
-            .map { nwMapper.nwModelToTrailer(it) }
-    }
-
-    override suspend fun getReviewList(movieId: Int): List<Review> {
-        return MovieApiFactory.movieApiService.loadReviews(movieId).reviews
-            .map { nwMapper.nwModelToReview(it) }
-    }
-
     override suspend fun getFavouriteMovieItemList(): List<MovieItem> {
         return dao.getAllFavouriteMovies().map { dbMapper.dbModelToMovieItem(it) }
     }

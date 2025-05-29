@@ -7,6 +7,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.mymovies.data.repository.MovieItemRepositoryImpl
+import com.example.mymovies.data.repository.ReviewRepositoryImpl
+import com.example.mymovies.data.repository.TrailerRepositoryImpl
 import com.example.mymovies.domain.usecase.AddFavouriteMovieUseCase
 import com.example.mymovies.domain.usecase.GetFavouriteMovieItemUseCase
 import com.example.mymovies.domain.dto.movie.MovieItem
@@ -33,12 +35,15 @@ class MovieDetailViewModel(application: Application) : AndroidViewModel(applicat
     val reviews : LiveData<List<Review>>
         get() = _reviews
 
-    private val repository = MovieItemRepositoryImpl(application)
-    private val getFavouriteMovieItemUseCase = GetFavouriteMovieItemUseCase(repository)
-    private val addFavouriteMovieItemUseCase = AddFavouriteMovieUseCase(repository)
-    private val removeFavouriteMovieItemUseCase = RemoveFavouriteMovieItemUseCase(repository)
-    private val getTrailerListUseCase = GetTrailerListUseCase(repository)
-    private val getReviewListUseCase = GetReviewListUseCase(repository)
+    private val movieRepository = MovieItemRepositoryImpl(application)
+    private val trailerRepository = TrailerRepositoryImpl(application)
+    private val reviewRepository = ReviewRepositoryImpl(application)
+
+    private val getFavouriteMovieItemUseCase = GetFavouriteMovieItemUseCase(movieRepository)
+    private val addFavouriteMovieItemUseCase = AddFavouriteMovieUseCase(movieRepository)
+    private val removeFavouriteMovieItemUseCase = RemoveFavouriteMovieItemUseCase(movieRepository)
+    private val getTrailerListUseCase = GetTrailerListUseCase(trailerRepository)
+    private val getReviewListUseCase = GetReviewListUseCase(reviewRepository)
 
     //TODO вынести в инит блок
     fun loadMovie(movieId: Int){

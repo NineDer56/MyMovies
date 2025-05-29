@@ -14,6 +14,8 @@ data class MovieItemDbModel (
     val type : String,
     val year : Int,
     val description : String,
-    @Embedded val rating : Rating,
-    @Embedded val poster : Poster
+    @Embedded (prefix = "rating_")
+    val rating : Rating,
+    @Embedded (prefix = "poster_")
+    val poster : Poster
 ) : Serializable
